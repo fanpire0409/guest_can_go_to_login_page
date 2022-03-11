@@ -4,8 +4,10 @@ from .locators import ProductPageLocators
 
 class ProductPage(BasePage):
     def check_add_to_basket(self):
+        self.should_not_be_success_message()
         self.add_to_basket()
         self.should_be_an_acc()
+        self.should_be_success_message()
         self.check_product_name()
         self.check_product_price()
 
@@ -27,3 +29,11 @@ class ProductPage(BasePage):
         price_success = self.browser.find_element(*ProductPageLocators.PRICE_SUCCESS)
         assert price_product.text == price_success.text, \
             "The product price in the notice does not match the product price in the description"
+
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message is presented, but should not be"
+
+    def should_be_success_message(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message is not presented, but should be"
