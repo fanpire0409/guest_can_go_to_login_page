@@ -7,9 +7,9 @@ class ProductPage(BasePage):
         self.should_not_be_success_message()
         self.add_to_basket()
         self.should_be_an_acc()
-        self.should_be_success_message()
         self.check_product_name()
         self.check_product_price()
+        self.success_message_should_disappear()
 
     def add_to_basket(self):
         add_product = self.browser.find_element(*ProductPageLocators.ADD_BUTTON)
@@ -34,6 +34,6 @@ class ProductPage(BasePage):
         assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
             "Success message is presented, but should not be"
 
-    def should_be_success_message(self):
+    def success_message_should_disappear(self):
         assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), \
             "Success message is not presented, but should be"
